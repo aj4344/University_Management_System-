@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Management System - Debug Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #1a73e8;
+        }
+        .container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .solution {
+            background-color: #e6f4ea;
+            border-left: 4px solid #34a853;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .warning {
+            background-color: #fef7e0;
+            border-left: 4px solid #fbbc04;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .error {
+            background-color: #fce8e6;
+            border-left: 4px solid #ea4335;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        code {
+            background-color: #f1f3f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #e0e0e0;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f3f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>University Management System - Troubleshooting Guide</h1>
+    
+    <div class="container">
+        <h2>System Setup Sequence</h2>
+        <p>For optimal functionality, follow this setup sequence:</p>
+        <ol>
+            <li>Start MongoDB and the server using <code>run_ums.bat</code></li>
+            <li>Register as an admin at <a href="http://localhost:3000/#/admin/signup">http://localhost:3000/#/admin/signup</a></li>
+            <li>Login as admin and create courses</li>
+            <li>Register as an instructor</li>
+            <li>Use the admin account to assign courses to instructors (Offer Course)</li>
+            <li>Register as a student</li>
+            <li>Login as a student and register for courses</li>
+            <li>Login as instructor to manage attendance and marks</li>
+        </ol>
+    </div>
+    
+    <div class="container">
+        <h2>Common Issues</h2>
+        
+        <h3>1. Course Registration Issues</h3>
+        <div class="error">
+            <p><strong>Error:</strong> "No courses are available for registration" or "Failed to register course"</p>
+        </div>
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <ul>
+                <li>Make sure an admin has created courses first</li>
+                <li>Verify that courses have been assigned to instructors (offered)</li>
+                <li>Check browser console (F12) for API errors</li>
+                <li>Ensure the correct endpoint <code>/course/registered/register</code> is being called</li>
+            </ul>
+        </div>
+        
+        <h3>2. "Fail to Fetch Courses" Error</h3>
+        <div class="error">
+            <p><strong>Error:</strong> API errors when trying to fetch courses</p>
+        </div>
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <ul>
+                <li>Verify MongoDB is running properly</li>
+                <li>Check server logs for connection issues</li>
+                <li>Ensure correct endpoints are being called</li>
+                <li>Try restarting the application</li>
+            </ul>
+        </div>
+        
+        <h3>3. Missing Admin Panel Access</h3>
+        <div class="error">
+            <p><strong>Error:</strong> Unable to access admin panel</p>
+        </div>
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <ul>
+                <li>Use the provided shortcuts: <code>admin_panel.bat</code></li>
+                <li>Access directly via <a href="http://localhost:3000/#/admin/login">http://localhost:3000/#/admin/login</a></li>
+                <li>If new to the system, register at <a href="http://localhost:3000/#/admin/signup">http://localhost:3000/#/admin/signup</a></li>
+            </ul>
+        </div>
+        
+        <h3>4. Marks Entry Issues</h3>
+        <div class="error">
+            <p><strong>Error:</strong> Unable to enter or view marks properly</p>
+        </div>
+        <div class="solution">
+            <p><strong>Solution:</strong></p>
+            <ul>
+                <li>Ensure students are registered for courses first</li>
+                <li>Check if course has the correct maxMarks and passingMarks values</li>
+                <li>Verify all required fields are filled when entering marks</li>
+                <li>Use the updated marks form with proper validation</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Database Reset</h2>
+        <div class="warning">
+            <p><strong>Warning:</strong> Resetting the database will delete ALL existing data!</p>
+        </div>
+        <p>If you need to start fresh:</p>
+        <ol>
+            <li>Run <code>reset_database.bat</code> (Windows) or <code>reset_database.sh</code> (Linux/Mac)</li>
+            <li>Follow the setup sequence from the beginning</li>
+        </ol>
+    </div>
+    
+    <div class="container">
+        <h2>Logs and Debugging</h2>
+        <p>To view detailed logs and troubleshoot issues:</p>
+        <ul>
+            <li>Open browser developer tools (F12)</li>
+            <li>Go to Console tab to view client-side errors</li>
+            <li>Check Network tab to monitor API calls</li>
+            <li>Server logs can be viewed in the terminal window running the server</li>
+        </ul>
+        <p>Search for specific error messages or check the following common error codes:</p>
+        <table>
+            <tr>
+                <th>Status Code</th>
+                <th>Meaning</th>
+                <th>Common Causes</th>
+            </tr>
+            <tr>
+                <td>400</td>
+                <td>Bad Request</td>
+                <td>Missing required fields, validation errors</td>
+            </tr>
+            <tr>
+                <td>401</td>
+                <td>Unauthorized</td>
+                <td>Not logged in, invalid credentials</td>
+            </tr>
+            <tr>
+                <td>404</td>
+                <td>Not Found</td>
+                <td>Resource doesn't exist, wrong endpoint</td>
+            </tr>
+            <tr>
+                <td>500</td>
+                <td>Server Error</td>
+                <td>Database issues, code errors on the server</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="container">
+        <h2>Contact Support</h2>
+        <p>If you continue to experience issues after following this guide, please refer to the project documentation or contact technical support.</p>
+    </div>
+</body>
+</html>

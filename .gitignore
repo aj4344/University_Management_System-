@@ -1,0 +1,15 @@
+# Dependency directories 
+node_modules/ 
+*/node_modules/ 
+# MongoDB data directory 
+mongodb-data/ 
+# IDE files 
+.vscode/ 
+.idea/ 
+# Environment variables 
+.env 
+# Build outputs 
+*/build/ 
+*/dist/ 
+# Logs 
+*.log 
